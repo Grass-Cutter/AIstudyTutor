@@ -41,4 +41,4 @@ This project can be run **100% free on [Replit](https://replit.com/)** or locall
 4. **Run the App**
    python main.py
 
-5. **Visit** 'http://localhost81' **in your browser**
+5. **Visit** 'https://localhost81' **in your browser**
