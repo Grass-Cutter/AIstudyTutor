@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Study AI</title>
+    <style>
+        body {
+            margin: 0;
+            position: relative;
+            height: 100vh;
+            background-color: white;
+            color: black;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body.dark-mode {
+            background-color: black;
+            color: white;
+        }
+
+        body.dark-mode input {
+            background-color: black;
+            color: white;
+            border: 2px solid white;
+        }
+
+        body.dark-mode .button {
+            background-color: white;
+            color: black;
+        }
+
+        body.dark-mode #dark-mode-toggle {
+            background-color: white;
+            color: black;
+        }
+
+        body.dark-mode #subject {
+            border: 2px solid white;
+            background-color: white;
+            color: black;
+        }
+
+        body.dark-mode .bubble {
+            background-color: white;
+            color: black;
+            
+        }
+        
+        .chat-form {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 10px;
+        }
+
+        input {
+            border-radius: 50px;
+            font-size: 16px;
+            border: 2px solid gray;
+            height: 40px;
+            text-align: left;
+            padding: 10px;
+            flex: 1;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .button {
+            border-radius: 50px;
+            background-color: black;
+            color: white;
+            width: 55px;
+            height: 55px;
+            font-size: 25px;
+            text-align: center;
+            border: none;
+        }
+
+        .chat-box {
+            margin: 0 auto;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            padding: 0 50px 120px 50px;
+        }
+
+        .message {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .bubble {
+            background-color: lightgray;
+            border-radius: 50px;
+            max-width: 70%;
+            padding: 15px 20px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .message-you,
+        .message-bot {
+            width: 100%;
+            display: flex;
+            margin-top: 10px;
+        }
+
+        .message-you {
+            justify-content: flex-end;
+        }
+
+        .message-bot {
+            justify-content: flex-start;
+        }
+
+        .topflex {
+            display: flex;
+            flex-direction: row;
+        }
+
+        #dark-mode-toggle {
+            height: 40px;
+            width: 40px;
+            border-radius: 50px;
+            background-color: black;
+            color: white;
+            font-size: 20px;
+            border: none;
+            text-align: center;
+            margin-top: 10px;
+            margin-left: 10px
+        }
+
+        #subject {
+            height: 63px;
+            border-radius: 50px;
+            font-size: 16px;
+            border: 2px solid gray;
+            text-align: center;
+            padding: 10px;
+            flex: 1
+        }
+    </style>
+</head>
+<body class="body">
+    <div class="container">
+        <div class="chat-box">
+            <div class = "topflex">
+                <h2>Study AI</h2>
+                <button id = "dark-mode-toggle">☀</button>
+            </div>
+            {% for sender, message in history %}
+            {% if sender == 'You' %}
+                <div class="message-you">
+            {% else %}
+                <div class="message-bot">
+            {% endif %}
+                <div class="bubble">
+                    <strong>{{ sender }}:</strong> {{ message }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="chat-form">
+            <form method="POST">
+                <select name = "subject" id = "subject">
+                    <option value = "general" {% if selected_subject == 'general' %}selected{% endif %}>General</option>
+                    <option value = "math" {% if selected_subject == 'math' %}selected{% endif %}>Math</option>
+                    <option value = "science" {% if selected_subject == 'science' %}selected{% endif %}>Science</option>
+                    <option value = "history" {% if selected_subject == 'history' %}selected{% endif %}>History</option>
+                    <option value = "english" {% if selected_subject == 'english' %}selected{% endif %}>English</option>
+                    <option value = "coding" {% if selected_subject == 'coding' %}selected{% endif %}>Coding</option>
+                </select>
+                <input name="user_input" type="text" autocomplete = "off" placeholder="Ask a study question..." required>
+                <button class = "button" type="submit">▲</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        const toggle = document.querySelector("#dark-mode-toggle");
+
+        if (localStorage.getItem("mode") === "dark") {
+            document.body.classList.add("dark-mode");
+            toggle.textContent = "☀";
+        }
+        
+        toggle.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+            const mode = document.body.classList.contains("dark-mode") ? "dark" : "light";
+            localStorage.setItem("mode", mode);
+            toggle.textContent = mode === "dark" ? "☀" : "☀";
+            
+            
+        });
+    </script>
+</body>
+</html>
